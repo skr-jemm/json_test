@@ -1,0 +1,107 @@
+#---> Identificador de la versión a utilizar
+openapi: 3.0.2
+#---> Estructura de la información relativa a la documentación correspondiente
+info:
+  #--> Nombre de la documentación
+  title: Kerno API
+  #---> Descripción de la documentación
+  description:
+    Ejemplo de documentación en YML para una API
+  # Términos del servicio
+  termsOfService: "http://swagger.io/terms/"
+  #--> Identificador para los contactos asociados.
+  contact:
+    name: Ejemplo Ejemplo Ejemplo
+    url: sekura.mx
+    email: jorge.martinez@sekura.mx
+  license:
+    name:  "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+  #---> Versión de la especificación
+  version: 1.0.0
+  #--> Versión 1.0.0: Contiene la estructura de la creación de la especificación
+
+  ######################### ESTRUCTURA DE SERVIDORES #####################################
+  servers:
+    ##--> cadena de conexión.
+    ##--> {} Nos permite realizar la concatenación de las variables
+    - url: '{protocol}://{environment}/insurancehub/extraction/customers'
+      variables:
+        ##--> variables de entorno {environment}
+        environment:
+          default: qakerno.sekura.mx #--> por default, se usará QA
+          enum:
+            - devkerno.sekura.mx
+          ##--> variables de protocolo
+        protocol:
+          default: https
+          enum:
+            - locahost:2020
+  ######################### ESTRUCTURA DE SERVIDORES #####################################
+
+  ######################### ESTRUCTURA DE ENDPOINTS #####################################
+  paths:
+    /customers: #--> Endpoint
+      get: #--> Método
+        tags: #-> Tags de identificación
+          - Información de los clientes en Insurancehub
+      summary: Regresa toda la información de los clientes #--> Pequeña descripción
+      description: Regresa toda la información de los clientes ligados a InsuranceHub #--> descripción más extensa
+      responses: ##--> se describen las respuestas esperadas ante la consulta
+        '200': ##--> cuando el estatus sea un 200
+          description: Lista con la información consultada  #---> Descripción de la respuesta
+          content: #----> Especificación del contenido de la respuesta
+            application/json: #---> Tipo de respuesta
+              schema: #---> declaración del esquema de respuesta
+                $ref: '#/components/schemas/customers'  ##--> estructura del esquema de la respuesta
+
+  ######################### ESTRUCTURA DE ENDPOINTS #####################################
+  ######################### ESTRUCTURA DE ESQUEMAS DE RESPUESTA #####################################
+  components:
+    schemas:
+      ###---------------> S para plural
+      customers:
+        #--> descripción de la estructura
+       description: "Un arreglo de customers ligados a Insurancehub"
+       type: array #--> tipo de respuesta
+       items:
+        $ref: "#/components/schemas/customers" #--> referencia a la estructura
+        #--> Ejemplo
+       example: [
+         {
+           "userId": 1,
+           "id": 1,
+           "beneficiary": true,
+           "beneficiaryName": "Sekura"
+         },
+         {
+           "userId": 1,
+           "id": 2,
+           "beneficiary": true,
+           "beneficiaryName": "Banco Nacional"
+         }
+       ]
+
+      ##-----------> Definición de la estructura para los movimientos de PUT/POST (Registro y actualización)
+      customer:
+        type: object
+        properties:
+          userId:
+            type: Integer
+            description: Identificador del customer
+          id:
+            type: Integer
+            description: Identificador del registro
+          beneficiary:
+            type: boolean
+            description: Bandera para contar o no con un beneficiario preferente
+          beneficiaryName:
+            type: String
+            description: Nombre del beneficiario
+        required:
+          - userId
+          - id
+          - beneficiary
+  ######################### ESTRUCTURA DE ESQUEMAS DE RESPUESTA #####################################
+
+#---> Estructura de la información relativa a la documentación correspondiente

@@ -1,0 +1,97 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "Kerno API",
+    "description": "Ejemplo de documentación en YML para una API",
+    "termsOfService": "http://swagger.io/terms/",
+    "contact": {
+      "name": "Ejemplo Ejemplo Ejemplo",
+      "url": "sekura.mx",
+      "email": "jorge.martinez@sekura.mx"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://qakerno.sekura.mx/insurancehub/extraction"
+    }
+  ],
+  "paths": {
+    "/customers": {
+      "get": {
+        "tags": [
+          "Información de los clientes en Insurancehub"
+        ],
+        "summary": "Regresa toda la información de los clientes",
+        "description": "Regresa toda la información de los clientes ligados a InsuranceHub",
+        "responses": {
+          "200": {
+            "description": "Lista con la información consultada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/customers"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "customers": {
+        "description": "Un arreglo de customers ligados a Insurancehub",
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/customers"
+        },
+        "example": [
+          {
+            "userId": 1,
+            "id": 1,
+            "beneficiary": true,
+            "beneficiaryName": "Sekura"
+          },
+          {
+            "userId": 1,
+            "id": 2,
+            "beneficiary": true,
+            "beneficiaryName": "Banco Nacional"
+          }
+        ]
+      },
+      "customer": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "integer",
+            "description": "Identificador del customer"
+          },
+          "id": {
+            "type": "integer",
+            "description": "Identificador del registro"
+          },
+          "beneficiary": {
+            "type": "boolean",
+            "description": "Bandera para contar o no con un beneficiario preferente"
+          },
+          "beneficiaryName": {
+            "type": "string",
+            "description": "Nombre del beneficiario"
+          }
+        },
+        "required": [
+          "userId",
+          "id",
+          "beneficiary"
+        ]
+      }
+    }
+  }
+}
