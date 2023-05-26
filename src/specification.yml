@@ -1,5 +1,5 @@
 #---> Identificador de la versión a utilizar
-openapi: 3.0.2
+openapi: 2.0
 #---> Estructura de la información relativa a la documentación correspondiente
 info:
   #--> Nombre de la documentación
